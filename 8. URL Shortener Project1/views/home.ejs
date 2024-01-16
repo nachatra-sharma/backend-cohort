@@ -4,8 +4,139 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home - Page</title>
+    <style>
+      * {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+      }
+
+      .heading {
+        margin: 20px 0px;
+        text-align: center;
+        letter-spacing: 1px;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      form {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin: 50px 0px;
+        gap: 20px;
+        align-items: center;
+      }
+
+      form > label {
+        font-family: sans-serif;
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      form > label > span {
+        color: red;
+      }
+
+      form > input {
+        padding: 2px 10px;
+        border: none;
+        padding: 10px 20px;
+        width: 30%;
+        outline: none;
+        border: 1px solid black;
+      }
+
+      form > button {
+        padding: 11px 20px;
+        border: none;
+        background: black;
+        letter-spacing: 0.7px;
+        font-family: sans-serif;
+        font-weight: bold;
+        color: white;
+      }
+
+      table {
+        width: 70%;
+        margin: 30px auto;
+      }
+
+      table > thead,
+      tbody {
+        padding: 10px;
+        text-align: center;
+      }
+
+      tr > th,
+      td {
+        padding: 15px;
+        border: 1px solid black;
+      }
+
+      table {
+        border-spacing: 0;
+        border-collapse: collapse;
+      }
+
+      .generated {
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        gap: 10px;
+        align-items: baseline;
+      }
+
+      .generated span {
+        font-weight: 400;
+        font-size: 0.9rem;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello from the server.</h1>
+    <h1 class="heading">URL Shortener</h1>
+
+    <form action="/url" method="post" autocomplete="off">
+      <label for="">Enter your original URL <span>*</span> </label>
+      <input
+        type="text"
+        name="url"
+        id=""
+        required
+        placeholder="https://www.example.com"
+      />
+      <button type="submit">Generate</button>
+    </form>
+
+    <% if (locals.id) { %>
+    <p class="generated">
+      URL Generated: <span> http://localhost:3000/url/<%= id %></span>
+    </p>
+
+    <% } %> <% if (locals.urls) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>S. No.</th>
+          <th>Short-ID</th>
+          <th>Redirect</th>
+          <th>Clicks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% urls.forEach((url, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= url.shortId %></td>
+          <td><%= url.redirectURL %></td>
+          <td><%= url.visitHistory.length %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
   </body>
 </html>
